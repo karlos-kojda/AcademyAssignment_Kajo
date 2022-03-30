@@ -18,4 +18,7 @@ public interface ArticleDAO {
 
 	  /** Delete {@link Article} from DB*/
 	  void deleteByID(Integer articleID);
+
+	  /** Returns all {@link Article}s where author, title or text contains the searched text */
+	  List<ArticleWithoutComment> findAllWithSearchedText(String searchedText);
 	}

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import sk.ness.academy.dao.ArticleDAO;
 import sk.ness.academy.dao.CommentDAO;
 import sk.ness.academy.domain.Comment;
+import sk.ness.academy.dto.ArticleWithoutComment;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;

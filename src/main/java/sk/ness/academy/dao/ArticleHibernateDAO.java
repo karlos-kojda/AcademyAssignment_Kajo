@@ -43,4 +43,14 @@ public class ArticleHibernateDAO implements ArticleDAO {
     this.sessionFactory.getCurrentSession().delete(this.findByID(articleID));
   }
 
+  @Override
+  public List<ArticleWithoutComment> findAllWithSearchedText(final String searchedText) {
+    return this.sessionFactory.getCurrentSession()
+            .createQuery("SELECT new sk.ness.academy.dto.ArticleWithoutComment" +
+                    "(id, title, text, author, createTimestamp) FROM Article " +
+                    "WHERE author LIKE '%"+searchedText+"%'" +
+                    "OR title LIKE '%"+searchedText+"%'" +
+                    "OR text LIKE '%"+searchedText+"%'" , ArticleWithoutComment.class)
+            .list();
+  }
 }

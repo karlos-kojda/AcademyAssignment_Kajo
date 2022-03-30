@@ -40,4 +40,9 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   public void deleteByID(final Integer articleID) { this.articleDAO.deleteByID(articleID); }
+
+  @Override
+  public List<ArticleWithoutComment> findAllWithSearchedText(final String searchedText) {
+    return this.articleDAO.findAllWithSearchedText(searchedText);
+  }
 }
