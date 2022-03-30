@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import sk.ness.academy.dao.AuthorDAO;
 import sk.ness.academy.dto.Author;
+import sk.ness.academy.dto.AuthorStats;
 
 @Service
 @Transactional
@@ -22,4 +23,8 @@ public class AuthorServiceImpl implements AuthorService {
     return this.authorDAO.findAll();
   }
 
+  @Override
+  public List<AuthorStats> findAllWithNumberOfArticles() {
+    return this.authorDAO.findAllWithNumberOfArticles();
+  }
 }

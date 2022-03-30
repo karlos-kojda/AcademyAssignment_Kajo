@@ -2,15 +2,15 @@ package sk.ness.academy.dto;
 
 public class AuthorStats {
 
-	  private String authorName;
+	  private String name;
 	  private Integer articleCount;
 
-	  public String getAuthorName() {
-	    return this.authorName;
+	  public String getname() {
+	    return this.name;
 	  }
 
-	  public void setAuthorName(final String authorName) {
-	    this.authorName = authorName;
+	  public void setname(final String name) {
+	    this.name = name;
 	  }
 
 	  public Integer getArticleCount() {
