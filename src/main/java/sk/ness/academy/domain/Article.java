@@ -32,7 +32,7 @@ public class Article {
   @Temporal(TemporalType.TIMESTAMP)
   private Date createTimestamp;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "article_id")
   private List<Comment> comments = new ArrayList<>();
 

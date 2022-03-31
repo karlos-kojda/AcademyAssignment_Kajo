@@ -16,6 +16,9 @@ public interface ArticleDAO {
 	  /** Persists {@link Article} into the DB */
 	  void persist(Article article);
 
+	  /** Creates new {@link Article}s by ingesting all articles from json */
+	  void ingestArticles(String jsonArticles);
+
 	  /** Delete {@link Article} from DB*/
 	  void deleteByID(Integer articleID);
 

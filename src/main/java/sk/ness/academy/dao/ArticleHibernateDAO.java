@@ -1,14 +1,20 @@
 package sk.ness.academy.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.web.server.ResponseStatusException;
 import sk.ness.academy.domain.Article;
+import sk.ness.academy.domain.Comment;
 import sk.ness.academy.dto.ArticleWithoutComment;
 
 @Repository
@@ -20,11 +26,12 @@ public class ArticleHibernateDAO implements ArticleDAO {
   @Override
   public Article findByID(final Integer articleId) {
     Article returnArticle = (Article) this.sessionFactory.getCurrentSession().get(Article.class, articleId);
+    Optional.ofNullable(returnArticle)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No existing article with this ID"));
     Hibernate.initialize(returnArticle.getComments());
     return returnArticle;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public List<ArticleWithoutComment> findAll() {
     return this.sessionFactory.getCurrentSession()
@@ -39,7 +46,20 @@ public class ArticleHibernateDAO implements ArticleDAO {
   }
 
   @Override
+  public void ingestArticles(String jsonArticles) {
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      List<Article> articles = List.of(mapper.readValue(jsonArticles, Article[].class));
+      articles.forEach(a -> this.persist(a));
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
   public void deleteByID(final Integer articleID) {
+    Article deletedArticle = this.findByID(articleID);
+    deletedArticle.getComments().forEach(A -> this.sessionFactory.getCurrentSession().delete(A));
     this.sessionFactory.getCurrentSession().delete(this.findByID(articleID));
   }
 

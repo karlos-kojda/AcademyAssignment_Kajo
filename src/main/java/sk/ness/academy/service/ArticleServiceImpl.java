@@ -35,7 +35,7 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   public void ingestArticles(final String jsonArticles) {
-    throw new UnsupportedOperationException("Article ingesting not implemented.");
+    this.articleDAO.ingestArticles(jsonArticles);
   }
 
   @Override
